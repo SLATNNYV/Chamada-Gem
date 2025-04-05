@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Chamada</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hidden {
+            display: none;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .presente {
+            background-color: #d4edda;
+        }
+        .ausente {
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Sistema de Presença GEM-Araruna</h1>
+        
+        <!-- Iniciar Aula -->
+        <div class="card " id="iniciar-aula-card">
+            <div class="card-header bg-primary text-white">
+                <h5>Iniciar Nova Aula</h5>
+            </div>
+            <div class="card-body">
+                <form id="aula-form">
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título da Aula:</label>
+                        <input type="text" class="form-control" id="titulo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="professor" class="form-label">Professor:</label>
+                        <input type="text" class="form-control" id="professor" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="horario" class="form-label">Horário:</label>
+                        <input type="text" class="form-control" id="horario" value="08:00 - 09:40" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar Aula</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Registrar Presença -->
+        <div class="card hidden" id="chamada-card">
+            <div class="card-header bg-success text-white">
+                <h5>Registrar Presença</h5>
+                <div id="aula-info" class="mt-2 small"></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Matrícula</th>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alunos-lista">
+                            <!-- Alunos serão listados aqui -->
+                        </tbody>
+                    </table>
+                </div>
+                <button id="finalizar-chamada" class="btn btn-warning">Finalizar Chamada</button>
+            </div>
+        </div>
+        
+        <!-- Relatório de Presença -->
+        <div class="card hidden" id="relatorio-card">
+            <div class="card-header bg-info text-white">
+                <h5>Relatório de Presença</h5>
+            </div>
+            <div class="card-body">
+                <div id="relatorio-detalhes"></div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">Alunos Presentes</div>
+                            <div class="card-body">
+                                <ul id="presentes-lista" class="list-group">
+                                    <!-- Lista de presentes -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">Alunos Ausentes</div>
+                            <div class="card-body">
+                                <ul id="ausentes-lista" class="list-group">
+                                    <!-- Lista de ausentes -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <button id="imprimir-relatorio" class="btn btn-primary">Imprimir Relatório</button>
+                    <button id="nova-chamada" class="btn btn-secondary">Nova Chamada</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais
+        let aulaAtual = null;
+        const API_URL = 'http://localhost:5000/api';
+        let alunos = [];
+        let presencasRegistradas = {};
+
+        // Elementos DOM
+        const iniciarAulaCard = document.getElementById('iniciar-aula-card');
+        const chamadaCard = document.getElementById('chamada-card');
+        const relatorioCard = document.getElementById('relatorio-card');
+        
+        // Event Listeners
+        document.getElementById('aula-form').addEventListener('submit', iniciarAula);
+        document.getElementById('finalizar-chamada').addEventListener('submit', finalizarChamada);
+        document.getElementById('imprimir-relatorio').addEventListener('click', imprimirRelatorio);
+        document.getElementById('nova-chamada').addEventListener('click', reiniciarSistema);
+
+        // Carregar alunos ao iniciar a página
+        window.addEventListener('DOMContentLoaded', carregarAlunos);
+
+        // Funções
+        async function carregarAlunos() {
+            try {
+                const response = await fetch(`${API_URL}/alunos`);
+                if (!response.ok) throw new Error('Erro ao carregar alunos');
+                
+                alunos = await response.json();
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Não foi possível carregar a lista de alunos.');
+            }
+        }
+
+        async function iniciarAula(e) {
+            e.preventDefault();
+            
+            const aulaData = {
+                titulo: document.getElementById('titulo').value,
+                professor: document.getElementById('professor').value,
+                horario: document.getElementById('horario').value
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/aulas`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(aulaData)
+                });
+                
+                if (!response.ok) throw new Error('Erro ao iniciar aula');
+                
+                aulaAtual = await response.json();
+                
+                // Atualizar interface
+                document.getElementById('aula-info').innerHTML = `
+                    <strong>Aula:</strong> ${aulaAtual.titulo} | 
+                    <strong>Professor:</strong> ${aulaAtual.professor} | 
+                    <strong>Data:</strong> ${aulaAtual.data} | 
+                    <strong>Horário:</strong> ${aulaAtual.horario}
+                `;
+                
+                // Mostrar tela de chamada
+                iniciarAulaCard.classList.add('hidden');
+                chamadaCard.classList.remove('hidden');
+                relatorioCard.classList.add('hidden');
+                
+                // Carregar lista de alunos para chamada
+                renderizarListaAlunos();
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Não foi possível iniciar a aula.');
+            }
+        }
+
+        function renderizarListaAlunos() {
+            const alunosLista = document.getElementById('alunos-lista');
+            alunosLista.innerHTML = '';
+            
+            alunos.forEach(aluno => {
+                const tr = document.createElement('tr');
+                tr.id = `aluno-${aluno.id}`;
+                
+                tr.innerHTML = `
+                    <td>${aluno.matricula}</td>
+                    <td>${aluno.nome}</td>
+                    <td id="status-${aluno.id}">Não registrado</td>
+                    <td>
+                        <button class="btn btn-sm btn-success marcar-presente" data-id="${aluno.id}">Presente</button>
+                        <button class="btn btn-sm btn-danger marcar-ausente" data-id="${aluno.id}">Ausente</button>
+                    </td>
+                `;
+                
+                alunosLista.appendChild(tr);
+            });
+            
+            // Adicionar event listeners para os botões
+            document.querySelectorAll('.marcar-presente').forEach(btn => {
+                btn.addEventListener('click', () => marcarPresenca(btn.dataset.id, 'presente'));
+            });
+            
+            document.querySelectorAll('.marcar-ausente').forEach(btn => {
+                btn.addEventListener('click', () => marcarPresenca(btn.dataset.id, 'ausente'));
+            });
+            
+            // Finalizar chamada
+            document.getElementById('finalizar-chamada').addEventListener('click', finalizarChamada);
+        }
+
+        async function marcarPresenca(alunoId, status) {
+            if (!aulaAtual) return;
+            
+            const alunoId_num = parseInt(alunoId);
+            
+            try {
+                const response = await fetch(`${API_URL}/presenca`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        aula_id: aulaAtual.id,
+                        aluno_id: alunoId_num,
+                        status: status
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Erro ao registrar presença');
+                
+                // Atualizar UI
+                const tr = document.getElementById(`aluno-${alunoId}`);
+                const statusCell = document.getElementById(`status-${alunoId}`);
+                
+                if (status === 'presente') {
+                    tr.classList.add('presente');
+                    tr.classList.remove('ausente');
+                    statusCell.textContent = 'Presente';
+                } else {
+                    tr.classList.add('ausente');
+                    tr.classList.remove('presente');
+                    statusCell.textContent = 'Ausente';
+                }
+                
+                presencasRegistradas[alunoId] = status;
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Não foi possível registrar a presença.');
+            }
+        }
+
+        async function finalizarChamada() {
+            if (!aulaAtual) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/relatorio/${aulaAtual.id}`);
+                if (!response.ok) throw new Error('Erro ao gerar relatório');
+                
+                const relatorio = await response.json();
+                
+                // Atualizar interface
+                chamadaCard.classList.add('hidden');
+                relatorioCard.classList.remove('hidden');
+                
+                // Preencher detalhes do relatório
+                document.getElementById('relatorio-detalhes').innerHTML = `
+                    <h4>Relatório de Presença</h4>
+                    <p><strong>Aula:</strong> ${relatorio.aula.titulo}</p>
+                    <p><strong>Professor:</strong> ${relatorio.aula.professor}</p>
+                    <p><strong>Data:</strong> ${relatorio.aula.data}</p>
+                    <p><strong>Horário:</strong> ${relatorio.aula.horario}</p>
+                    <p><strong>Relatório gerado em:</strong> ${relatorio.data_geracao}</p>
+                    <hr>
+                    <div class="alert alert-info">
+                        <h5>Estatísticas</h5>
+                        <p>Total de alunos: ${relatorio.estatisticas.total_alunos}</p>
+                        <p>Presentes: ${relatorio.estatisticas.total_presentes} (${relatorio.estatisticas.percentual_presenca.toFixed(1)}%)</p>
+                        <p>Ausentes: ${relatorio.estatisticas.total_ausentes}</p>
+                    </div>
+                `;
+                
+                // Listar presentes
+                const presentesLista = document.getElementById('presentes-lista');
+                presentesLista.innerHTML = '';
+                
+                relatorio.presentes.forEach(aluno => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = `${aluno.matricula} - ${aluno.nome}`;
+                    presentesLista.appendChild(li);
+                });
+                
+                // Listar ausentes
+                const ausentesLista = document.getElementById('ausentes-lista');
+                ausentesLista.innerHTML = '';
+                
+                relatorio.ausentes.forEach(aluno => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = `${aluno.matricula} - ${aluno.nome}`;
+                    ausentesLista.appendChild(li);
+                });
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Não foi possível gerar o relatório.');
+            }
+        }
+
+        function imprimirRelatorio() {
+            window.print();
+        }
+
+        function reiniciarSistema() {
+            // Resetar variáveis
+            aulaAtual = null;
+            presencasRegistradas = {};
+            
+            // Resetar formulário
+            document.getElementById('aula-form').reset();
+            
+            // Mostrar tela inicial
+            relatorioCard.classList.add('hidden');
+            iniciarAulaCard.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

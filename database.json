@@ -1,0 +1,403 @@
+{
+    "alunos": [
+        {
+            "id": 1,
+            "nome": "Ana Silva",
+            "instrumento": "2024001"
+        },
+        {
+            "id": 2,
+            "nome": "Bruno Souza",
+            "instrumento": "2024002"
+        },
+        {
+            "id": 3,
+            "nome": "Carla Mendes",
+            "instrumento": "2024003"
+        },
+        {
+            "id": 4,
+            "nome": "Daniel Costa",
+            "instrumento": "2024004"
+        },
+        {
+            "id": 5,
+            "nome": "Eduarda Santos",
+            "instrumento": "2024005"
+        }
+    ],
+    "aulas": [
+        {
+            "id": 1,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 2,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 3,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 4,
+            "data": "2025-04-04",
+            "titulo": "h",
+            "professor": "h",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 5,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "h",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 6,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 7,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 8,
+            "data": "2025-04-04",
+            "titulo": "d2",
+            "professor": "d1",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 9,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 10,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 11,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 12,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 13,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 14,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 15,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 16,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 17,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 18,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 19,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 20,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 21,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 22,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 23,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 24,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 25,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 26,
+            "data": "2025-04-04",
+            "titulo": "",
+            "professor": "",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 27,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 28,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 29,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "h",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 30,
+            "data": "2025-04-04",
+            "titulo": "c",
+            "professor": "2",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 31,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 32,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 33,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 34,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 35,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 36,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 37,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 38,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 39,
+            "data": "2025-04-04",
+            "titulo": "e",
+            "professor": "001",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 40,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 41,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 42,
+            "data": "2025-04-04",
+            "titulo": "data",
+            "professor": "h",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 43,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 44,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 45,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 46,
+            "data": "2025-04-04",
+            "titulo": "data",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 47,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 48,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 49,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 50,
+            "data": "2025-04-04",
+            "titulo": "data",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 51,
+            "data": "2025-04-04",
+            "titulo": "data",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 52,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        },
+        {
+            "id": 53,
+            "data": "2025-04-04",
+            "titulo": "d",
+            "professor": "d",
+            "horario": "08:00 - 09:40"
+        }
+    ],
+    "presencas": []
+}
